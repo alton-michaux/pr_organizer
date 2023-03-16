@@ -2,14 +2,13 @@ require 'httparty'
 
 module FetchResponse
   def self.get_response
-    puts ENV.keys
     headers = { 
       "method" => "GET",
       "username"  => ENV["USERNAME"],
       "token" => ENV["ACCESS"]
     }
 
-    response = HTTParty.get(`#{ENV["BASE"]}`,
+    response = HTTParty.get("#{ENV["BASE"]}",
       :headers => headers
     )
     
