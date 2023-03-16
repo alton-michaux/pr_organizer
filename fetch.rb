@@ -9,6 +9,12 @@ module FetchResponse
       "X-GitHub-Api-Version": "2022-11-28"
     }
 
-    response = HTTParty.get("#{ENV["BASE"]}#{ENV["EXTENSION"]}", headers: headers).parsed_response
+    response = HTTParty.get("#{ENV["BASE"]}#{ENV["EXTENSION"]}", headers: headers)
+
+    if response.code == 200
+      response.body
+    else
+      response.body = "ERROR #{response.code}: #{response.message}"
+    end
   end
 end
