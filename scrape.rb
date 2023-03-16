@@ -8,7 +8,7 @@ module FetchResponse
       "token" => ENV["ACCESS"]
     }
 
-    response = HTTParty.get("#{ENV["BASE"]}",
+    response = HTTParty.get("#{ENV["BASE"]}/orgs/CodeTheDream/repositories",
       :headers => headers
     )
     
