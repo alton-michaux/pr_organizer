@@ -2,7 +2,16 @@ require 'httparty'
 
 module FetchResponse
   def self.get_response
-    response = HTTParty.get('https://github.com/CodeTheDream/rsites-api/pulls')
+    puts ENV.keys
+    headers = { 
+      "method" => "GET",
+      "username"  => ENV["USERNAME"],
+      "token" => ENV["ACCESS"]
+    }
+
+    response = HTTParty.get(`#{ENV["BASE"]}`,
+      :headers => headers
+    )
     
     if response.code == 200
       response.body
