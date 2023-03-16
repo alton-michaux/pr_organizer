@@ -4,8 +4,8 @@ require_relative 'fetch.rb'
 module Parser
   include FetchResponse
   class Parse
-    document = Nokogiri::HTML4(FetchResponse.get_response)
+    # document = Nokogiri::HTML4(FetchResponse.get_response)
 
-    puts document
+    pp FetchResponse.get_response
   end
 end
