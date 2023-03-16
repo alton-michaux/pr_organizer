@@ -1,5 +1,5 @@
 require 'nokogiri'
-require_relative 'scrape.rb'
+require_relative 'fetch.rb'
 
 module Parser
   include FetchResponse
