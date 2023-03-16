@@ -8,14 +8,8 @@ module FetchResponse
       "token" => ENV["ACCESS"]
     }
 
-    response = HTTParty.get("#{ENV["BASE"]}/orgs/CodeTheDream/repositories",
+    response = HTTParty.get("#{ENV["BASE"]}",
       :headers => headers
-    )
-    
-    if response.code == 200
-      response.body
-    else
-      response.body = "Error: #{response.code}"
-    end  
+    ).parsed_response
   end
 end
