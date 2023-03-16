@@ -9,6 +9,6 @@ module FetchResponse
       "X-GitHub-Api-Version": "2022-11-28"
     }
 
-    response = HTTParty.get("#{ENV["BASE"]}CodeTheDream/rsites-api/pulls", headers: headers).parsed_response
+    response = HTTParty.get("#{ENV["BASE"]}#{ENV["EXTENSION"]}", headers: headers).parsed_response
   end
 end
