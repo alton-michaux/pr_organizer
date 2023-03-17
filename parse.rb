@@ -1,20 +1,21 @@
-require 'nokogiri'
+require 'byebug'
 require_relative 'fetch.rb'
 
 module Parser
   include FetchResponse
   class Parse
-    document = Nokogiri::HTML4(FetchResponse.get_response)
+    response = FetchResponse.get_response
 
-    pulls = []
+    pulls = {}
 
-    all_pulls = document.css('div.Box-row--drag-hide')
-
-    all_pulls.each do |pull|
-      title = pull.css('.markdown-title > a > div')
-      pulls << pull
+    response.each do |pull|
+      if pull["state"] == "open"
+        title = pull["title"]
+        url = pull["html_url"]
+        pulls[title] = url
+      end
     end
 
-    pp document
+    pp pulls
   end
 end
