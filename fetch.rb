@@ -12,11 +12,5 @@ module FetchResponse
     query = { q: "issue" }
 
     response = HTTParty.get("#{ENV["BASE"]}#{ENV["EXTENSION"]}", query: query, headers: headers).parsed_response
-
-    # if response.code == 200
-    #   response.body
-    # else
-    #   response.body = "ERROR #{response.code}: #{response.message}"
-    # end
   end
 end

@@ -3,7 +3,7 @@ require_relative 'fetch.rb'
 
 module Parser
   include FetchResponse
-  class Parse
+  def self.parse_pull_requests
     response = FetchResponse.get_response
 
     pulls = {}
@@ -16,6 +16,6 @@ module Parser
       end
     end
 
-    pp pulls
+    pulls
   end
 end
