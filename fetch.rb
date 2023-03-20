@@ -1,5 +1,5 @@
 require 'httparty'
-require 'google-apis-docs_v1'
+require_relative 'google_sheets_service.rb'
 
 module FetchResponse
   def self.get_response
@@ -18,8 +18,6 @@ module FetchResponse
   end
 
   def self.upload_csv
-    drive = Google::Apis::DriveV2:DriveService.new
-
     options = {
       headers: {
         'Transfer-Encoding': 'chunked',
