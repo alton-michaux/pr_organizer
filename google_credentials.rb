@@ -10,7 +10,7 @@ module GoogleCredentials
 
   def make_credentials!
     creds = Google::Auth::UserRefreshCredentials.new(credentials_config)
-    creds.refresh_token = ENV['REFRESH_TOKEN']
+    creds.refresh_token = REFRESH_TOKEN
     creds.fetch_access_token!
     creds
   end
