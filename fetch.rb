@@ -1,4 +1,5 @@
 require 'httparty'
+require 'google-apis-docs_v1'
 
 module FetchResponse
   def self.get_response
@@ -17,6 +18,8 @@ module FetchResponse
   end
 
   def self.upload_csv
+    drive = Google::Apis::DriveV2:DriveService.new
+
     options = {
       headers: {
         'Transfer-Encoding': 'chunked',
