@@ -14,10 +14,8 @@ module FetchResponse
     response = HTTParty.get("#{ENV["BASE"]}#{ENV["EXTENSION"]}", query: query, headers: headers).parsed_response
 
     if response.code == 200
-      byebug
       response
     else
-      byebug
       "ERROR: #{response.message}"
     end
   end
@@ -42,8 +40,7 @@ module FetchResponse
 
     if response.code == 200 
       puts response 
-    else 
-      byebug
+    else
       puts "ERROR: #{response.message}"
     end
   end

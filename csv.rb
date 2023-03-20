@@ -15,8 +15,6 @@ module BuildCSV
           csv << pull
         end
       end
-
-      puts "created csv"
     end
   end
 end
