@@ -14,6 +14,7 @@ module GoogleCredentials
     creds.fetch_access_token!
     creds
   end
+
   def credentials_config
     {
       client_id: CLIENT_ID,

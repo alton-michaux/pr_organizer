@@ -21,7 +21,6 @@ module FetchResponse
     options = {
       headers: {
         'Transfer-Encoding': 'chunked',
-        'Authorization': "Bearer #{ENV["ACCESS_TOKEN"]}",
         'Content-Type': 'text/csv',
         'Accept': 'application/json'
       },
@@ -30,15 +29,10 @@ module FetchResponse
       }
     }
 
-    response = HTTParty.post(
-      "#{ENV["SERVICE_ENDPOINT"]}/v4/spreadsheets",
-      options
-    )
+    service = GoogleSheetsService.service
 
-    if response.code == 200 
-      puts response 
-    else
-      puts "ERROR: #{response.message}"
-    end
+    response = service.create_spreadsheet(
+      options: options
+    )
   end
 end
