@@ -9,15 +9,11 @@ module FetchResponse
       "X-GitHub-Api-Version": "2022-11-28"
     }
 
+    url = "#{ENV["BASE"]}#{ENV["CTD_REPOS"]}"
+
     query = { q: "issue" }
 
-    response = HTTParty.get("#{ENV["BASE"]}#{ENV["EXTENSION"]}", query: query, headers: headers).parsed_response
-
-    if response.code == 200
-      response
-    else
-      "ERROR: #{response.message}"
-    end
+    response = HTTParty.get(url, query: query, headers: headers).parsed_response
   end
 
   def self.upload_csv
@@ -34,7 +30,7 @@ module FetchResponse
     }
 
     response = HTTParty.post(
-      "#{ENV["SERVICE_ENDPOINT"]}v4/spreadsheets",
+      "#{ENV["SERVICE_ENDPOINT"]}/v4/spreadsheets",
       options
     )
 
