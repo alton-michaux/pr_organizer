@@ -27,8 +27,6 @@ module FetchResponse
     new_sheet.properties.title = sheet_name
     # new_sheet.sheets = File.open('./pulls.csv').read.to_json
 
-    # byebug
-
     response = service.create_spreadsheet(new_sheet)
   end
 end
