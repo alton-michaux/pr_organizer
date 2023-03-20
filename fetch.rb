@@ -12,25 +12,38 @@ module FetchResponse
     query = { q: "issue" }
 
     response = HTTParty.get("#{ENV["BASE"]}#{ENV["EXTENSION"]}", query: query, headers: headers).parsed_response
+
+    if response.code == 200
+      byebug
+      response
+    else
+      byebug
+      "ERROR: #{response.message}"
+    end
   end
 
   def self.upload_csv
-    headers = {
-      'Transfer-Encoding': 'chunked',
-      'Authorization': "Bearer #{ENV["ACCESS_TOKEN"]}",
-      'Content-Type': "text/csv",
-      'Accept': 'application/json'
+    options = {
+      headers: {
+        'Transfer-Encoding': 'chunked',
+        'Authorization': "Bearer #{ENV["ACCESS_TOKEN"]}",
+        'Content-Type': 'text/csv',
+        'Accept': 'application/json'
+      },
+      body: {
+        media: File.open('./pulls.csv').read.to_json
+      }
     }
 
     response = HTTParty.post(
-      "https://sheets.googleapis.com/v4/spreadsheets",
-      headers: headers,
-      body_stream: File.open('./pulls.csv', 'r')
+      "#{ENV["SERVICE_ENDPOINT"]}v4/spreadsheets",
+      options
     )
 
     if response.code == 200 
       puts response 
     else 
+      byebug
       puts "ERROR: #{response.message}"
     end
   end

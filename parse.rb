@@ -16,6 +16,7 @@ module Parser
       end
     end
 
+    puts "retrieved data"
     pulls
   end
 end

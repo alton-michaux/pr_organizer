@@ -9,14 +9,14 @@ module BuildCSV
 
       CSV.open('pulls.csv', 'w+',
         write_headers: true,
-        headers: %w[Title URL]) do |csv|
+        headers: %w[Title Url]) do |csv|
 
         pulls.each do |pull|
           csv << pull
         end
       end
 
-      puts "created CSV file"
+      puts "created csv"
     end
   end
 end
