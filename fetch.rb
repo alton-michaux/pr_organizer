@@ -18,21 +18,17 @@ module FetchResponse
   end
 
   def self.upload_csv
-    options = {
-      headers: {
-        'Transfer-Encoding': 'chunked',
-        'Content-Type': 'text/csv',
-        'Accept': 'application/json'
-      },
-      body: {
-        media: File.open('./pulls.csv').read.to_json
-      }
-    }
-
     service = GoogleSheetsService.service
+    
+    sheet_name = "PRs for Review"
 
-    response = service.create_spreadsheet(
-      options: options
-    )
+    new_sheet = Google::Apis::SheetsV4::Spreadsheet.new
+    new_sheet.properties = Google::Apis::SheetsV4::SheetProperties.new
+    new_sheet.properties.title = sheet_name
+    # new_sheet.sheets = File.open('./pulls.csv').read.to_json
+
+    # byebug
+
+    response = service.create_spreadsheet(new_sheet)
   end
 end

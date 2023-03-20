@@ -1,5 +1,5 @@
 require "google-apis-sheets_v4"
-require_relative "credentials.rb"
+require_relative "google_credentials.rb"
 
 class GoogleSheetsService
   include GoogleCredentials
@@ -17,6 +17,7 @@ class GoogleSheetsService
 
   def freshly_authorized_service
     service = Google::Apis::SheetsV4::SheetsService.new
+    service.client_options.application_name = ENV["APPLICATION_NAME"]
     service.authorization = make_credentials!
     service
   end
