@@ -25,8 +25,31 @@ module FetchResponse
     new_sheet = Google::Apis::SheetsV4::Spreadsheet.new
     new_sheet.properties = Google::Apis::SheetsV4::SheetProperties.new
     new_sheet.properties.title = sheet_name
-    # new_sheet.sheets = File.open('./pulls.csv').read.to_json
 
     response = service.create_spreadsheet(new_sheet)
+  end
+
+  def self.update_csv
+    service = GoogleSheetsService.service
+
+    values = [ File.open('./pulls.csv').read.to_json ]
+
+    range = "WorksheetInParentSpreadsheet!A1:M"
+
+    data = Google::Apis::SheetsV4::ValueRange.new
+    data.values = [values]
+    data.major_dimension = 'ROWS'
+
+    spreadsheet = `spreadsheet_object`
+    request = Google::Apis::SheetsV4::BatchUpdateValuesRequest.new
+
+    request.data = [data] # <--- Modified
+
+    request.value_input_option = 2
+    data.range = range
+
+    service.batch_update_values(ENV["SPREADSHEET_ID"], request)
+    # url = "https://sheets.googleapis.com/v4/spreadsheets/#{ENV['SPREADSHEET_ID']}:batchUpdate"
+    response = service.batchUpdate
   end
 end

@@ -6,5 +6,5 @@ module Upload
   include FetchResponse
   
   CSVBuilder.create_csv
-  FetchResponse.upload_csv
+  FetchResponse.update_csv
 end
