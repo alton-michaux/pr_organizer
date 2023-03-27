@@ -27,9 +27,13 @@ module FetchResponse
     new_sheet.properties.title = sheet_name
 
     response = service.create_spreadsheet(new_sheet)
+
+    return response.spreadsheet_id
   end
 
   def self.update_csv
+    spreadsheet_id = self.upload_csv
+
     service = GoogleSheetsService.service
 
     values = [ File.open('./csv/pulls.csv').read.to_json ]
@@ -38,10 +42,10 @@ module FetchResponse
 
     data = [Google::Apis::SheetsV4::ValueRange.new(values: values)]
 
-    value_input_option = 'RAW'
+    value_input_option = 'USER_ENTERED'
 
     response = service.append_spreadsheet_value(
-      ENV["SPREADSHEET_ID"],
+      spreadsheet_id,
       range,
       data,
       value_input_option: value_input_option
