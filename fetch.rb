@@ -39,17 +39,25 @@ module FetchResponse
     data = Google::Apis::SheetsV4::ValueRange.new
     data.values = [values]
     data.major_dimension = 'ROWS'
+    data.range = range
 
-    spreadsheet = `spreadsheet_object`
+    spreadsheet = File.open('./pulls.csv').read.to_json
+
     request = Google::Apis::SheetsV4::BatchUpdateValuesRequest.new
 
     request.data = [data] # <--- Modified
 
     request.value_input_option = 2
-    data.range = range
-
+byebug
     service.batch_update_values(ENV["SPREADSHEET_ID"], request)
     # url = "https://sheets.googleapis.com/v4/spreadsheets/#{ENV['SPREADSHEET_ID']}:batchUpdate"
+    # response = HTTParty.post(url, request.to_h)
     response = service.batchUpdate
+
+    if response.ok? 
+      puts response 
+    else 
+      puts response.parsed_response["error"]["message"]
+    end
   end
 end
