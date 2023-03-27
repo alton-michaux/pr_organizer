@@ -26,6 +26,8 @@ module FetchResponse
     new_sheet.properties = Google::Apis::SheetsV4::SheetProperties.new
     new_sheet.properties.title = sheet_name
 
+    puts "Uploading new spreadsheet"
+
     response = service.create_spreadsheet(new_sheet)
 
     return response.spreadsheet_id
@@ -33,6 +35,8 @@ module FetchResponse
 
   def self.update_csv
     spreadsheet_id = self.upload_csv
+
+    puts "Done"
 
     service = GoogleSheetsService.service
 
@@ -43,6 +47,8 @@ module FetchResponse
     data = [Google::Apis::SheetsV4::ValueRange.new(values: values)]
 
     value_input_option = 'USER_ENTERED'
+
+    puts "Uploading updates"
 
     response = service.append_spreadsheet_value(
       spreadsheet_id,

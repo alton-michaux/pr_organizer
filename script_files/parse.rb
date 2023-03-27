@@ -4,7 +4,11 @@ require_relative 'fetch.rb'
 module Parser
   include FetchResponse
   def self.parse_pull_requests
+    puts "Fetching pull requests..."
+
     response = FetchResponse.get_response
+
+    puts "Done"
 
     pulls = {}
 
