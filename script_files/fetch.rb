@@ -1,5 +1,5 @@
 require 'httparty'
-require_relative 'google_sheets_service.rb'
+require_relative '../google_services/google_sheets_service.rb'
 
 module FetchResponse
   def self.get_response
@@ -34,30 +34,30 @@ module FetchResponse
 
     values = [ File.open('./pulls.csv').read.to_json ]
 
-    range = "WorksheetInParentSpreadsheet!A1:M"
+    range = "PRs for Review!A1:M"
 
     data = Google::Apis::SheetsV4::ValueRange.new
     data.values = [values]
     data.major_dimension = 'ROWS'
-    data.range = range
 
-    spreadsheet = File.open('./pulls.csv').read.to_json
+    spreadsheet_id = ENV["SPREADSHEET_ID"]
 
     request = Google::Apis::SheetsV4::BatchUpdateValuesRequest.new
 
     request.data = [data] # <--- Modified
 
-    request.value_input_option = 2
-byebug
-    service.batch_update_values(ENV["SPREADSHEET_ID"], request)
+    request.value_input_option = 'USER_ENTERED'
+    data.range = range
+# byebug
+    service.batch_update_values(spreadsheet_id, request)
     # url = "https://sheets.googleapis.com/v4/spreadsheets/#{ENV['SPREADSHEET_ID']}:batchUpdate"
     # response = HTTParty.post(url, request.to_h)
     response = service.batchUpdate
 
-    if response.ok? 
-      puts response 
-    else 
-      puts response.parsed_response["error"]["message"]
-    end
+    # if response.ok? 
+    #   puts response 
+    # else 
+    #   puts response.parsed_response["error"]["message"]
+    # end
   end
 end

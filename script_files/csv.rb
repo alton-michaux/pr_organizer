@@ -7,7 +7,7 @@ module BuildCSV
     def self.create_csv
       pulls = Parser.parse_pull_requests
 
-      CSV.open('pulls.csv', 'w+',
+      CSV.open('csv/pulls.csv', 'w+',
         write_headers: true,
         headers: %w[Title Url]) do |csv|
 

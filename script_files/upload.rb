@@ -1,3 +1,7 @@
+require 'dotenv'
+
+Dotenv.load
+
 require_relative 'fetch.rb'
 require_relative 'csv.rb'
 
