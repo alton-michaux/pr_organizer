@@ -32,32 +32,19 @@ module FetchResponse
   def self.update_csv
     service = GoogleSheetsService.service
 
-    values = [ File.open('./pulls.csv').read.to_json ]
+    values = [ File.open('./csv/pulls.csv').read.to_json ]
 
-    range = "PRs for Review!A1:M"
+    range = "Sheet1!A1"
 
-    data = Google::Apis::SheetsV4::ValueRange.new
-    data.values = [values]
-    data.major_dimension = 'ROWS'
+    data = [Google::Apis::SheetsV4::ValueRange.new(values: values)]
 
-    spreadsheet_id = ENV["SPREADSHEET_ID"]
+    value_input_option = 'RAW'
 
-    request = Google::Apis::SheetsV4::BatchUpdateValuesRequest.new
-
-    request.data = [data] # <--- Modified
-
-    request.value_input_option = 'USER_ENTERED'
-    data.range = range
-# byebug
-    service.batch_update_values(spreadsheet_id, request)
-    # url = "https://sheets.googleapis.com/v4/spreadsheets/#{ENV['SPREADSHEET_ID']}:batchUpdate"
-    # response = HTTParty.post(url, request.to_h)
-    response = service.batchUpdate
-
-    # if response.ok? 
-    #   puts response 
-    # else 
-    #   puts response.parsed_response["error"]["message"]
-    # end
+    response = service.append_spreadsheet_value(
+      ENV["SPREADSHEET_ID"],
+      range,
+      data,
+      value_input_option: value_input_option
+    )
   end
 end
