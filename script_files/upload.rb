@@ -17,5 +17,5 @@ module Upload
 
   FetchResponse.update_csv
 
-  puts "Spreadsheet uploaded"
+  puts "Spreadsheet updated"
 end

@@ -36,20 +36,18 @@ module FetchResponse
   def self.update_csv
     spreadsheet_id = self.upload_csv
 
-    puts "Done"
-
     service = GoogleSheetsService.service
 
-    values = [ File.open('./csv/pulls.csv').read.to_json ]
+    values = [ File.open('./csv/pulls.csv').read ]
 
-    range = "Sheet1!A1"
+    range = "Sheet1!A1:M2"
 
     data = [Google::Apis::SheetsV4::ValueRange.new(values: values)]
 
-    value_input_option = 'USER_ENTERED'
+    value_input_option = 'RAW'
 
     puts "Uploading updates"
-
+    
     response = service.append_spreadsheet_value(
       spreadsheet_id,
       range,

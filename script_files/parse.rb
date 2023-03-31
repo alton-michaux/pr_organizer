@@ -8,8 +8,6 @@ module Parser
 
     response = FetchResponse.get_response
 
-    puts "Done"
-
     pulls = {}
 
     response.each do |pull|
